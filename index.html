@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Player App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #333;
+      color: #fff;
+    }
+
+    h1 {
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .video-container {
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeIn 2s ease-in-out forwards;
+    }
+
+    .controls {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeIn 2s ease-in-out forwards;
+      animation-delay: 1s;
+    }
+
+    button, #fileInput {
+      margin: 0 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #444;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    button:hover, #fileInput:hover {
+      background-color: #555;
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      button, #fileInput {
+        padding: 5px 10px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Video Player App</h1>
+  <div class="video-container">
+    <video id="videoPlayer" width="100%" height="auto" controls>
+      Your browser does not support the video tag.
+    </video>
+    <!-- <div class="controls">
+      <button onclick="playPause()">Play/Pause</button>
+      <button onclick="stopVideo()">Stop</button>
+      <button onclick="muteUnmute()">Mute/Unmute</button>
+    </div> -->
+  </div>
+  <input type="file" id="fileInput" accept="video/*" onchange="loadVideo()" />
+  <script>
+    const video = document.getElementById('videoPlayer');
+    const fileInput = document.getElementById('fileInput');
+
+    function loadVideo() {
+      const file = fileInput.files[0];
+      const fileURL = URL.createObjectURL(file);
+      video.src = fileURL;
+      video.load();
+      video.play();
+    }
+
+    function playPause() {
+      if (video.paused) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    }
+
+    function stopVideo() {
+      video.pause();
+      video.currentTime = 0;
+    }
+
+    function muteUnmute() {
+      video.muted = !video.muted;
+    }
+  </script>
+</body>
+</html>
